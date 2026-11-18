@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="companyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Companies">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Manager" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sector" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Tbl_Departments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Personels">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Profile" Type="nvarchar" MaxLength="100" />
+          <Property Name="Department" Type="int" />
+        </EntityType>
+        <EntityType Name="Tbl_WorkDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Work" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tbl_Works">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Manager" Type="int" />
+          <Property Name="Worker" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date" Type="date" />
+        </EntityType>
+        <Association Name="FK_Tbl_Personels_Tbl_Departments">
+          <End Role="Tbl_Departments" Type="Self.Tbl_Departments" Multiplicity="0..1" />
+          <End Role="Tbl_Personels" Type="Self.Tbl_Personels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Personels">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_WorkDetails_Tbl_Works">
+          <End Role="Tbl_Works" Type="Self.Tbl_Works" Multiplicity="0..1" />
+          <End Role="Tbl_WorkDetails" Type="Self.Tbl_WorkDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Works">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_WorkDetails">
+              <PropertyRef Name="Work" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Works_Tbl_Personels">
+          <End Role="Tbl_Personels" Type="Self.Tbl_Personels" Multiplicity="0..1" />
+          <End Role="Tbl_Works" Type="Self.Tbl_Works" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Personels">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Works">
+              <PropertyRef Name="Manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Works_Tbl_Personels1">
+          <End Role="Tbl_Personels" Type="Self.Tbl_Personels" Multiplicity="0..1" />
+          <End Role="Tbl_Works" Type="Self.Tbl_Works" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Personels">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Works">
+              <PropertyRef Name="Worker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="companyModelStoreContainer">
+          <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Companies" EntityType="Self.Tbl_Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Departments" EntityType="Self.Tbl_Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Personels" EntityType="Self.Tbl_Personels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_WorkDetails" EntityType="Self.Tbl_WorkDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Works" EntityType="Self.Tbl_Works" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Tbl_Personels_Tbl_Departments" Association="Self.FK_Tbl_Personels_Tbl_Departments">
+            <End Role="Tbl_Departments" EntitySet="Tbl_Departments" />
+            <End Role="Tbl_Personels" EntitySet="Tbl_Personels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WorkDetails_Tbl_Works" Association="Self.FK_Tbl_WorkDetails_Tbl_Works">
+            <End Role="Tbl_Works" EntitySet="Tbl_Works" />
+            <End Role="Tbl_WorkDetails" EntitySet="Tbl_WorkDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Works_Tbl_Personels" Association="Self.FK_Tbl_Works_Tbl_Personels">
+            <End Role="Tbl_Personels" EntitySet="Tbl_Personels" />
+            <End Role="Tbl_Works" EntitySet="Tbl_Works" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Works_Tbl_Personels1" Association="Self.FK_Tbl_Works_Tbl_Personels1">
+            <End Role="Tbl_Personels" EntitySet="Tbl_Personels" />
+            <End Role="Tbl_Works" EntitySet="Tbl_Works" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="companyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tbl_Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tbl_Companies">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Manager" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sector" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tbl_Departments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Personels" Relationship="Self.FK_Tbl_Personels_Tbl_Departments" FromRole="Tbl_Departments" ToRole="Tbl_Personels" />
+        </EntityType>
+        <EntityType Name="Tbl_Personels">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Profile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="Int32" />
+          <NavigationProperty Name="Tbl_Departments" Relationship="Self.FK_Tbl_Personels_Tbl_Departments" FromRole="Tbl_Personels" ToRole="Tbl_Departments" />
+          <NavigationProperty Name="Tbl_Works" Relationship="Self.FK_Tbl_Works_Tbl_Personels" FromRole="Tbl_Personels" ToRole="Tbl_Works" />
+          <NavigationProperty Name="Tbl_Works1" Relationship="Self.FK_Tbl_Works_Tbl_Personels1" FromRole="Tbl_Personels" ToRole="Tbl_Works" />
+        </EntityType>
+        <EntityType Name="Tbl_WorkDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Work" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Works" Relationship="Self.FK_Tbl_WorkDetails_Tbl_Works" FromRole="Tbl_WorkDetails" ToRole="Tbl_Works" />
+        </EntityType>
+        <EntityType Name="Tbl_Works">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manager" Type="Int32" />
+          <Property Name="Worker" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Tbl_Personels" Relationship="Self.FK_Tbl_Works_Tbl_Personels" FromRole="Tbl_Works" ToRole="Tbl_Personels" />
+          <NavigationProperty Name="Tbl_Personels1" Relationship="Self.FK_Tbl_Works_Tbl_Personels1" FromRole="Tbl_Works" ToRole="Tbl_Personels" />
+          <NavigationProperty Name="Tbl_WorkDetails" Relationship="Self.FK_Tbl_WorkDetails_Tbl_Works" FromRole="Tbl_Works" ToRole="Tbl_WorkDetails" />
+        </EntityType>
+        <Association Name="FK_Tbl_Personels_Tbl_Departments">
+          <End Role="Tbl_Departments" Type="Self.Tbl_Departments" Multiplicity="0..1" />
+          <End Role="Tbl_Personels" Type="Self.Tbl_Personels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Departments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Personels">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Works_Tbl_Personels">
+          <End Role="Tbl_Personels" Type="Self.Tbl_Personels" Multiplicity="0..1" />
+          <End Role="Tbl_Works" Type="Self.Tbl_Works" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Personels">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Works">
+              <PropertyRef Name="Manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Works_Tbl_Personels1">
+          <End Role="Tbl_Personels" Type="Self.Tbl_Personels" Multiplicity="0..1" />
+          <End Role="Tbl_Works" Type="Self.Tbl_Works" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Personels">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Works">
+              <PropertyRef Name="Worker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_WorkDetails_Tbl_Works">
+          <End Role="Tbl_Works" Type="Self.Tbl_Works" Multiplicity="0..1" />
+          <End Role="Tbl_WorkDetails" Type="Self.Tbl_WorkDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Works">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_WorkDetails">
+              <PropertyRef Name="Work" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="companyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
+          <EntitySet Name="Tbl_Companies" EntityType="Self.Tbl_Companies" />
+          <EntitySet Name="Tbl_Departments" EntityType="Self.Tbl_Departments" />
+          <EntitySet Name="Tbl_Personels" EntityType="Self.Tbl_Personels" />
+          <EntitySet Name="Tbl_WorkDetails" EntityType="Self.Tbl_WorkDetails" />
+          <EntitySet Name="Tbl_Works" EntityType="Self.Tbl_Works" />
+          <AssociationSet Name="FK_Tbl_Personels_Tbl_Departments" Association="Self.FK_Tbl_Personels_Tbl_Departments">
+            <End Role="Tbl_Departments" EntitySet="Tbl_Departments" />
+            <End Role="Tbl_Personels" EntitySet="Tbl_Personels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Works_Tbl_Personels" Association="Self.FK_Tbl_Works_Tbl_Personels">
+            <End Role="Tbl_Personels" EntitySet="Tbl_Personels" />
+            <End Role="Tbl_Works" EntitySet="Tbl_Works" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Works_Tbl_Personels1" Association="Self.FK_Tbl_Works_Tbl_Personels1">
+            <End Role="Tbl_Personels" EntitySet="Tbl_Personels" />
+            <End Role="Tbl_Works" EntitySet="Tbl_Works" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WorkDetails_Tbl_Works" Association="Self.FK_Tbl_WorkDetails_Tbl_Works">
+            <End Role="Tbl_Works" EntitySet="Tbl_Works" />
+            <End Role="Tbl_WorkDetails" EntitySet="Tbl_WorkDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="companyModelStoreContainer" CdmEntityContainer="companyEntities">
+          <EntitySetMapping Name="Tbl_Admin">
+            <EntityTypeMapping TypeName="companyModel.Tbl_Admin">
+              <MappingFragment StoreEntitySet="Tbl_Admin">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Companies">
+            <EntityTypeMapping TypeName="companyModel.Tbl_Companies">
+              <MappingFragment StoreEntitySet="Tbl_Companies">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Departments">
+            <EntityTypeMapping TypeName="companyModel.Tbl_Departments">
+              <MappingFragment StoreEntitySet="Tbl_Departments">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Personels">
+            <EntityTypeMapping TypeName="companyModel.Tbl_Personels">
+              <MappingFragment StoreEntitySet="Tbl_Personels">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_WorkDetails">
+            <EntityTypeMapping TypeName="companyModel.Tbl_WorkDetails">
+              <MappingFragment StoreEntitySet="Tbl_WorkDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Work" ColumnName="Work" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Works">
+            <EntityTypeMapping TypeName="companyModel.Tbl_Works">
+              <MappingFragment StoreEntitySet="Tbl_Works">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="Worker" ColumnName="Worker" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
